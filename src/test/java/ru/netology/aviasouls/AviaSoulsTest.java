@@ -16,6 +16,7 @@ public class AviaSoulsTest {
     Ticket ticket5 = new Ticket("Москва", "Владивосток", 33_100, 21_40, 4_35);
     Ticket ticket6 = new Ticket("Москва", "Владивосток", 28_850, 23_00, 6_10);
     Ticket ticket7 = new Ticket("Москва", "Владивосток", 27_299, 24_20, 6_50);
+    Ticket ticket8 = new Ticket("Москва", "Сочи", 23_299, 7_20, 10_50);
 
     @Test
     public void shouldSortByPriceInCompareToMethod() {
@@ -30,7 +31,7 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void shouldSortByPriceInSearchMethod() {
+    public void shouldSortByPriceForMultipleTicketsInSearchMethod() {
         AviaSouls souls = new AviaSouls();
 
         souls.add(ticket1);
@@ -40,12 +41,51 @@ public class AviaSoulsTest {
         souls.add(ticket5);
         souls.add(ticket6);
         souls.add(ticket7);
+        souls.add(ticket8);
 
         Ticket[] expected = {ticket7, ticket6, ticket4, ticket3, ticket2, ticket1, ticket5};
         Ticket[] actual = souls.search("Москва", "Владивосток");
 
         Assertions.assertArrayEquals(expected, actual);
 
+    }
+
+    @Test
+    public void shouldSortByPriceForOneTicketInSearchMethod() {
+        AviaSouls souls = new AviaSouls();
+
+        souls.add(ticket1);
+        souls.add(ticket2);
+        souls.add(ticket3);
+        souls.add(ticket4);
+        souls.add(ticket5);
+        souls.add(ticket6);
+        souls.add(ticket7);
+        souls.add(ticket8);
+
+        Ticket[] expected = {ticket8};
+        Ticket[] actual = souls.search("Москва", "Сочи");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSortByPriceForNoOneTicketInSearchMethod() {
+        AviaSouls souls = new AviaSouls();
+
+        souls.add(ticket1);
+        souls.add(ticket2);
+        souls.add(ticket3);
+        souls.add(ticket4);
+        souls.add(ticket5);
+        souls.add(ticket6);
+        souls.add(ticket7);
+        souls.add(ticket8);
+
+        Ticket[] expected = {};
+        Ticket[] actual = souls.search("Москва", "Омск");
+
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -62,7 +102,7 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void shouldSortByFlightTimeInSearchAndSortByMethod() {
+    public void shouldSortByFlightTimeForMultipleTicketsInSearchAndSortByMethod() {
         AviaSouls souls = new AviaSouls();
         TicketTimeComparator comparator = new TicketTimeComparator();
 
@@ -73,9 +113,50 @@ public class AviaSoulsTest {
         souls.add(ticket5);
         souls.add(ticket6);
         souls.add(ticket7);
+        souls.add(ticket8);
 
         Ticket[] expected = {ticket7, ticket3, ticket2, ticket5, ticket6, ticket1, ticket4};
         Ticket[] actual = souls.searchAndSortBy("Москва", "Владивосток", comparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSortByFlightTimeForOneTicketInSearchAndSortByMethod() {
+        AviaSouls souls = new AviaSouls();
+        TicketTimeComparator comparator = new TicketTimeComparator();
+
+        souls.add(ticket1);
+        souls.add(ticket2);
+        souls.add(ticket3);
+        souls.add(ticket4);
+        souls.add(ticket5);
+        souls.add(ticket6);
+        souls.add(ticket7);
+        souls.add(ticket8);
+
+        Ticket[] expected = {ticket8};
+        Ticket[] actual = souls.searchAndSortBy("Москва", "Сочи", comparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSortByFlightTimeForNoOneTicketInSearchAndSortByMethod() {
+        AviaSouls souls = new AviaSouls();
+        TicketTimeComparator comparator = new TicketTimeComparator();
+
+        souls.add(ticket1);
+        souls.add(ticket2);
+        souls.add(ticket3);
+        souls.add(ticket4);
+        souls.add(ticket5);
+        souls.add(ticket6);
+        souls.add(ticket7);
+        souls.add(ticket8);
+
+        Ticket[] expected = {};
+        Ticket[] actual = souls.searchAndSortBy("Москва", "Омск", comparator);
 
         Assertions.assertArrayEquals(expected, actual);
     }
